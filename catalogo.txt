@@ -1,0 +1,12 @@
+pantalla 100 samsung
+refei 200 daewoo
+lavadora 150 whirpool
+microondas 50 samsung
+gabinete 100 samsung
+pantalla 100 samsung
+lavadora 150 daewoo
+horno 200 techheavy
+servidor 300 samsung
+proyector 100 whirpool
+gabinete 100 samsung
+pantalla 100 samsung

@@ -1,0 +1,8 @@
++-----------------------------------+
+|         Resumen de Compra         |
++-----------------------------------+
+|Nombre:                             y|
+|Celular:                            34|
+|Email:                              skdk@mail|
+|Total:                              441.367|
+|Metodo de Pago:                     Debito/Credito|
