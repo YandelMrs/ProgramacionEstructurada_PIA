@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <regex>
 using namespace std;
 
 void cargarCatalogo(vector<PRODUCTO>& catalogo) {
@@ -18,7 +19,7 @@ void cargarCatalogo(vector<PRODUCTO>& catalogo) {
         return;
 
     }
-    while (archivo >> temp.nombre >> temp.precio >> temp.marca) {
+    while (archivo >> temp.id >> temp.nombre >> temp.precio >> temp.marca) {
 
         catalogo.push_back(temp);
 
@@ -27,7 +28,7 @@ void cargarCatalogo(vector<PRODUCTO>& catalogo) {
     archivo.close();
 
     const int columnas = 3;
-    const int ancho = 30;
+    const int ancho = 38;
 
     cout << "=================================== PRODUCTOS A LA VENTA ===================================" << endl;
 
@@ -41,21 +42,42 @@ void cargarCatalogo(vector<PRODUCTO>& catalogo) {
 
         for (int j = i; j < fin; j++) {
             cout << "| " << left << setw(ancho - 4)
-                << ("Producto: " + catalogo[j].nombre)
+                << "[" + to_string(catalogo[j].id) + "] " + catalogo[j].nombre
                 << " | ";
         }
         cout << endl;
 
         for (int j = i; j < fin; j++) {
             cout << "| " << left << setw(ancho - 4)
-                << ("Precio: $" + to_string((int)catalogo[j].precio))
+                << " "
                 << " | ";
         }
         cout << endl;
 
         for (int j = i; j < fin; j++) {
             cout << "| " << left << setw(ancho - 4)
-                << ("Marca: " + catalogo[j].marca)
+                << ("$" + to_string((int)catalogo[j].precio))
+                << " | ";
+        }
+        cout << endl;
+
+        for (int j = i; j < fin; j++) {
+            cout << "| " << left << setw(ancho - 4)
+                << catalogo[j].marca
+                << " | ";
+        }
+        cout << endl;
+
+        for (int j = i; j < fin; j++) {
+            cout << "| " << left << setw(ancho - 4)
+                << " "
+                << " | ";
+        }
+        cout << endl;
+
+        for (int j = i; j < fin; j++) {
+            cout << "| " << left << setw(ancho - 4)
+                << "+ Agregar al Carrito"
                 << " | ";
         }
         cout << endl;
@@ -68,68 +90,65 @@ void cargarCatalogo(vector<PRODUCTO>& catalogo) {
 
 }
 
-void buscarProducto(vector<PRODUCTO>& catalogo, bool& condicion) {
+void buscarProducto(vector<PRODUCTO>& catalogo, int& lineas) {
 
     string productob;
 
-    cout << "==================================" << endl;
-    cout << "       Buscador de productos      " << endl;
-    cout << "==================================" << endl;
-    cout << "Buscar: "; cin >> productob;
+    cout << "+-- BUSCAR PRODUCTO --------------------------------------------------+" << endl;
+    cout << "| Producto:                                                           |\033[59D"; cin >> productob;
+    cout << "+---------------------------------------------------------------------+" << endl;
+    cout << "| Productos Encontrados                                               |" << endl;
+    cout << "+---------------------------------------------------------------------+" << endl;
 
+    regex patronBusqueda(productob, regex_constants::icase);
     bool encontrado = false;
     for (int i = 0; i < catalogo.size(); i++) {
 
-        if (productob == catalogo[i].nombre) {
+        if (regex_search(catalogo[i].nombre, patronBusqueda)) {
 
-            cout << "==================================" << endl;
-            cout << "       Producto encontrado!       " << endl;
-            cout << "==================================" << endl;
-            cout << left << setw(17) << "Producto:" << left << setw(18) << catalogo[i].nombre << endl;
-            cout << left << setw(17) << "Precio:" << left << setw(18) << catalogo[i].precio << endl;
-            cout << left << setw(17) << "Marca:" << left << setw(18) << catalogo[i].marca << endl;
-            cout << "==================================" << endl;
-            cout << endl;
+            lineas += 2;
             encontrado = true;
-            break;
+            cout << "|" << left << setw(37) << catalogo[i].nombre
+                << "|" << left << setw(15) << catalogo[i].marca
+                << "|" << left << setw(15) << fixed << setprecision(2) << catalogo[i].precio << "|" << endl;
+            cout << "+---------------------------------------------------------------------+" << endl;
 
         }
 
     }
+    if (encontrado == true) cout << endl;
     if (encontrado == false) {
-    
-        cout << "==================================" << endl;
-        cout << "    Producto no encontrado :(     " << endl;
-        cout << "==================================" << endl;
+
+        lineas += 2;
+        cout << "|                   No se encontro ningun producto!                   |" << endl;
+        cout << "+---------------------------------------------------------------------+" << endl;
         cout << endl;
 
     }
-
-    condicion = encontrado;
 
 }
 
 void mostrarCarrito(double& subtotal, vector<string> productos, vector<PRODUCTO>& catalogo) {
 
-    subtotal = 0;
-
-    cout << ">>>>>>>>>>>>> CARRITO <<<<<<<<<<<<<" << endl;
-    cout << "-----------------------------------" << endl;
+    cout << "+-- CARRITO DE COMPRAS -------------------------------------+" << endl;
+    cout << "|         Producto          |     Marca     |     Precio    |" << endl;
+    cout << "+-----------------------------------------------------------+" << endl;
     for (int i = 0; i < productos.size(); i++) {
         for (int j = 0; j < catalogo.size(); j++) {
 
             if (productos[i] == catalogo[j].nombre) {
 
-                cout << left << setw(18) << catalogo[j].nombre << left << setw(17) << catalogo[j].precio << endl;
-                subtotal += catalogo[j].precio;
+                cout << "|" << left << setw(27) << catalogo[j].nombre
+                    << "|" << left << setw(15) << catalogo[j].marca
+                    << "|" << left << setw(15) << fixed << setprecision(2) << catalogo[j].precio << "|" << endl;
+                cout << "+-----------------------------------------------------------+" << endl;
 
             }
 
         }
     }
-    cout << "-----------------------------------" << endl;
-    cout << left << setw(18) << "Subtotal: " << left << setw(17) << subtotal << endl;
-    cout << ">>>>>>>>> TICKET TEMPORAL <<<<<<<<<" << endl;
+    cout << "|" << right << setw(44) << "Subtotal: " << left << setw(15) << subtotal  << "|" << endl;
+    cout << "+-----------------------------------------------------------+" << endl;
     cout << endl;
 
 }

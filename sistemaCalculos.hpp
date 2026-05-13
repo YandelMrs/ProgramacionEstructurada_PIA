@@ -15,6 +15,13 @@ struct PEDIDO {
     string celular;
     string email;
 
+    string calle;
+    string numero;
+    string colonia;
+    string municipio;
+    string estado;
+    string cp;
+
     string direccion;
     string referencias;
     double latitud;
@@ -32,4 +39,4 @@ void calcularDistancia(PEDIDO& p);
 void calcularCostoEnvio(PEDIDO& p, double subtotal);
 bool validarTarjetaLuhn(const string& numeroTarjeta);
 void elegirMetodoPago(PEDIDO& p);
-void generarTicket(PEDIDO& p);
+void generarTicket(PEDIDO& p, vector<string> productos);

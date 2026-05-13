@@ -61,12 +61,14 @@ void calcularCostoEnvio(PEDIDO& p, double subtotal) {
     p.costoEnvio = (2 * exp(0.225 * p.distancia)) - (0.1 * log(p.distancia + 1)) + 50;
     if (p.costoEnvio < 50) p.costoEnvio = 50;
 
-    cout << " Deseas envio premium?(24 hrs, +35%): "; cin >> ans;
-    cout << "+-----------------------------------+" << endl;
+    cout << "| Envio premium(24 hrs, +35%)                     |" << endl;
+    cout << "| Solicitar(si/no):                               |\033[31D"; cin >> ans;
+    cout << "+-------------------------------------------------+" << endl;
     if (ans == "si" || ans == "SI" || ans == "Si") p.costoEnvio *= 1.35;
 
-    cout << " Deseas pagar seguro de envio?: "; cin >> ans;
-    cout << "+-----------------------------------+" << endl;
+    cout << "| Seguro de envio(+10% compra)                    |" << endl;
+    cout << "| Solicitar(si/no):                               |\033[31D"; cin >> ans;
+    cout << "+-------------------------------------------------+" << endl;
     if (ans == "si" || ans == "SI" || ans == "Si") {
         
         double costoSeguro  = subtotal * 0.10; 
@@ -111,17 +113,37 @@ void elegirMetodoPago(PEDIDO& p) {
 
     int op;
 
-    cout << " Elige tu metodo de pago" << endl << endl;
-    cout << " 1 - Efectivo" << endl;
-    cout << " 2 - Debito/Credito" << endl;
-    cout << " Opcion: "; cin >> op;
-    cout << "+-----------------------------------+" << endl;
+    cout << "| Elige tu metodo de pago                         |" << endl;
+    cout << "|                                                 |" << endl;
+    cout << "| 1 - Efectivo                                    |" << endl;
+    cout << "| 2 - Debito/Credito                              |" << endl;
+
+    do {
+
+        cout << "| Opcion:                                         |\033[41D"; cin >> op;
+        if (op != 1 && op != 2) {
+
+            cout << "| /Error.(Opcion Invalida)                        |" << endl;
+            cout << "| [Enter] para intentar de nuevo...               |" << endl;
+            cin.ignore(10000, '\n');
+            cin.get();
+
+            for (int i = 0; i < 4; i++) {
+                cout << "\033[F";
+                cout << "\033[K";
+            }
+
+        }
+
+    } while (op != 1 && op != 2);
+
+    cout << "+-------------------------------------------------+" << endl;
 
     switch (op) {
         case 1: {
             p.metodoPago = "Efectivo";
-            cout << " Pagaras al recibir el envio :)" << endl;
-            cout << "+-----------------------------------+" << endl;
+            cout << "| Pagaras al recibir el envio :)                  |" << endl;
+            cout << "+-------------------------------------------------+" << endl;
             break;
         }
 
@@ -130,23 +152,24 @@ void elegirMetodoPago(PEDIDO& p) {
             bool valido;
             p.metodoPago = "Debito/Credito";
 
-            cout << " Datos de Tarjeta" << endl << endl;
+            cout << "| Datos de tarjeta                                |" << endl;
+            cout << "|                                                 |" << endl;
 
             do {
 
-                cout << " Numero: ";
+                cout << "| Numero:                                         |\033[41D";
                 getline(cin >> ws, numeroTarejta);
 
                 valido = validarTarjetaLuhn(numeroTarejta);
 
                 if (valido == false) {
 
-                    cout << " Numero de tarjeta no valido" << endl;
-                    cout << " Presiona Enter para continuar...";
+                    cout << "| /Error.(Numero de tarjeta no valido)            |" << endl;
+                    cout << "| [Enter] para intentar de nuevo...               |" << endl;
                     cin.ignore(10000, '\n');
                     cin.get();
 
-                    for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 4; i++) {
                         cout << "\033[F";
                         cout << "\033[K";
                     }
@@ -154,13 +177,11 @@ void elegirMetodoPago(PEDIDO& p) {
 
             } while (valido == false);
 
-            cout << " Fecha de vencimiento: ";
-            cin >> fecha;
-            cout << " CVV: ";
-            cin >> cvv;
-
-            cout << endl << " Pago Realizado :D" << endl;
-            cout << "+-----------------------------------+" << endl;
+            cout << "| Fecha de vencimiento:                           |\033[27D"; cin >> fecha;
+            cout << "| CVV:                                            |\033[44D"; cin >> cvv;
+            cout << "|                                                 |" << endl;
+            cout << "| Pago Realizado :D                               |" << endl;
+            cout << "+-------------------------------------------------+" << endl;
             break;
         }
 
@@ -168,7 +189,7 @@ void elegirMetodoPago(PEDIDO& p) {
 
 }
 
-void generarTicket(PEDIDO& p) {
+void generarTicket(PEDIDO& p, vector<string> productos) {
 
 
     ofstream archivoTicket("ticket.txt", ios::out);
@@ -180,14 +201,23 @@ void generarTicket(PEDIDO& p) {
 
     }
 
-    archivoTicket << "+-----------------------------------+" << endl;
-    archivoTicket << "|         Resumen de Compra         |" << endl;
-    archivoTicket << "+-----------------------------------+" << endl;
-    archivoTicket << left << "|Nombre: " << p.nombre << setw(36) << "|" << endl;
-    archivoTicket << left << "|Celular: " << p.celular << setw(36) << "|" << endl;
-    archivoTicket << left << "|Email: " << p.email << setw(36) << "|" << endl;
-    archivoTicket << left << "|Total:  " << p.costoTotal << setw(36) << "|" << endl;
-    archivoTicket << left << "|Metodo de Pago: " << p.metodoPago << setw(36) << "|" << endl;
+    archivoTicket << "+-------------------------------------------------+" << endl;
+    archivoTicket << "|                Resumen de Compra                |" << endl;
+    archivoTicket << "+-------------------------------------------------+" << endl;
+    archivoTicket << "|" << left << setw(49) << ("Nombre: " + p.nombre) << "|" << endl;
+    archivoTicket << "|" << left << setw(49) << ("Celular: " + p.celular) << "|" << endl;
+    archivoTicket << "|" << left << setw(49) << ("Email: " + p.email) << "|" << endl;
+    archivoTicket << "+-------------------------------------------------+" << endl;
+    archivoTicket << "|" << left << setw(49) << "Productos: " << "|" << endl;
+    for (int i = 0; i < productos.size(); i++) {
+
+        archivoTicket << "|" << left << setw(49) << productos[i] << "|" << endl;
+
+    }
+    archivoTicket << "+-------------------------------------------------+" << endl;
+    archivoTicket << "|" << left << setw(49) << ("Metodo de Pago: " + p.metodoPago) << "|" << endl;
+    archivoTicket << "|Total: $" << left << setw(41) << fixed << setprecision(2) << p.costoTotal << "|" << endl;
+    archivoTicket << "+-------------------------------------------------+" << endl;
 
     archivoTicket.close();
 

@@ -1,12 +1,50 @@
-pantalla 100 samsung
-refei 200 daewoo
-lavadora 150 whirpool
-microondas 50 samsung
-gabinete 100 samsung
-pantalla 100 samsung
-lavadora 150 daewoo
-horno 200 techheavy
-servidor 300 samsung
-proyector 100 whirpool
-gabinete 100 samsung
-pantalla 100 samsung
+1 Pantalla_32in_HD 3500 Hisense
+2 Pantalla_40in_FHD 4800 TCL
+3 Pantalla_43in_4K 5500 LG
+4 Pantalla_50in_4K 7200 Samsung
+5 Pantalla_55in_OLED 18500 LG
+6 Pantalla_65in_QLED 22000 Samsung
+7 Pantalla_70in_4K 16000 Hisense
+8 Pantalla_75in_4K 21000 Sony
+9 Pantalla_85in_QLED 35000 Samsung
+10 Proyector_FHD_Smart 6500 LG
+11 Refrigerador_9p 6500 Mabe
+12 Refrigerador_11p 8200 Hisense
+13 Refrigerador_14p 10500 Whirlpool
+14 Refrigerador_16p_Inverter 13000 LG
+15 Refrigerador_18p_French 18500 Samsung
+16 Refrigerador_22p_SideBySide 24000 LG
+17 Refrigerador_25p_Instaview 32000 LG
+18 Refrigerador_28p_FamilyHub 45000 Samsung
+19 Frigobar_4p 3200 Midea
+20 Congelador_9p 5800 Hisense
+21 Lavadora_16kg 7500 Mabe
+22 Lavadora_18kg 8800 Whirlpool
+23 Lavadora_20kg_Inverter 11500 Samsung
+24 Lavadora_22kg_Frontal 15000 LG
+25 Lavasecadora_15kg 17500 Samsung
+26 Lavasecadora_20kg 21000 LG
+27 Secadora_Gas_20kg 9500 Whirlpool
+28 Secadora_Elect_18kg 8500 Mabe
+29 Centro_Lavado_17kg 22000 Mabe
+30 Centro_Lavado_20kg 26000 Whirlpool
+31 Microondas_0.7p 1500 Daewoo
+32 Microondas_1.1p 2200 LG
+33 Microondas_1.4p_Grill 3500 Samsung
+34 Horno_Electrico_32L 1800 Oster
+35 Estufa_Gas_30in 6500 Mabe
+36 Estufa_Empotrable_30in 8200 Whirlpool
+37 Parrilla_Induccion 5500 Teka
+38 Campana_Extractora 2800 Mabe
+39 Lavavajillas_14_Serv 12500 Whirlpool
+40 Cava_Vinos_12bot 4500 Hisense
+41 Minisplit_1_Ton_110V 5500 Mirage
+42 Minisplit_1_Ton_Inverter 7800 LG
+43 Minisplit_1.5_Ton_220V 8500 Midea
+44 Minisplit_2_Ton_Inverter 14500 Samsung
+45 Aire_Ventana_0.5Ton 4200 Whirlpool
+46 Purificador_Aire 3500 Xiaomi
+47 Calentador_Gas_11L 4800 Bosch
+48 Calentador_Elec_60L 5200 Rheem
+49 Aspiradora_Robot 4500 Roomba
+50 Aspiradora_Inalambrica 6500 Dyson

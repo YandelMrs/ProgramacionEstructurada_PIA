@@ -7,6 +7,7 @@ using namespace std;
 
 struct PRODUCTO {
 
+    int id;
     string nombre;
     double precio;
     string marca;
@@ -16,17 +17,16 @@ struct PRODUCTO {
 struct CARRITO {
 
     vector<string> productos;
-    double subtotal;
-    bool condicion;
+    double subtotal = 0;
+    int cantLineas = 9;
 
     void agregarAlCarrito(vector<PRODUCTO> catalogo) {
 
         string producto;
 
-        cout << "==================================" << endl;
-        cout << "  Agrega un producto al carrito!  " << endl;
-        cout << "==================================" << endl;
-        cout << "Anadir: "; cin >> producto;
+        cout << "+-- AGERGAR PRODUCTO -----------------------------+" << endl;
+        cout << "| Producto:                                       |\033[39D"; cin >> producto;
+        cout << "+-------------------------------------------------+" << endl;
         
         bool encontrado = false;
         for (int i = 0; i < catalogo.size(); i++) {
@@ -34,10 +34,10 @@ struct CARRITO {
             if (producto == catalogo[i].nombre) {
 
                 productos.push_back(producto);
+                subtotal += catalogo[i].precio;
                 encontrado = true;
-                cout << "==================================" << endl;
-                cout << "       Producto agregado :D       " << endl;
-                cout << "==================================" << endl;
+                cout << "|               Producto Agregado :D              |" << endl;
+                cout << "+-------------------------------------------------+" << endl;
                 cout << endl;
                 break;
 
@@ -46,9 +46,8 @@ struct CARRITO {
         }
         if (encontrado == false) {
 
-            cout << "==================================" << endl;
-            cout << " Producto no esta en el catalogo! " << endl;
-            cout << "==================================" << endl;
+            cout << "|             Producto no encontrado!             |" << endl;
+            cout << "+-------------------------------------------------+" << endl;
             cout << endl;
 
         }
@@ -56,35 +55,44 @@ struct CARRITO {
 
     }
 
-    void eliminarDelCarrito() {
+    void eliminarDelCarrito(vector<PRODUCTO> catalogo) {
 
         string producto;
 
         if (productos.empty()) {
 
-            cout << "==================================" << endl;
-            cout << "     Advertencia: Carrito vacio   " << endl;
-            cout << "==================================" << endl;
+            cout << "+-- ELIMINAR PRODUCTO ----------------------------+" << endl;
+            cout << "| Producto:                                       |" << endl;
+            cout << "+-------------------------------------------------+" << endl;
+            cout << "|               Carrito esta vacio!               |" << endl;
+            cout << "+-------------------------------------------------+" << endl;
             cout << endl;
             return;
 
         }
 
-        cout << "==================================" << endl;
-        cout << "        Eliminar producto!        " << endl;
-        cout << "==================================" << endl;
-        cout << "Eliminar: "; cin >> producto;
+        cout << "+-- ELIMINAR PRODUCTO ----------------------------+" << endl;
+        cout << "| Producto:                                       |\033[39D"; cin >> producto;
+        cout << "+-------------------------------------------------+" << endl;
 
         bool encontrado = false;
         for (int i = 0; i < productos.size(); i++) {
 
             if (producto == productos[i]) {
 
-                productos.erase(productos.begin() + i);
-                encontrado = true;
-                cout << "==================================" << endl;
-                cout << "       Producto eliminado :(      " << endl;
-                cout << "==================================" << endl;
+                for (int j = 0; j < catalogo.size(); j++) {
+
+                    if (productos[i] == catalogo[j].nombre) {
+
+                        productos.erase(productos.begin() + i);
+                        subtotal -= catalogo[j].precio;
+                        encontrado = true;
+                        break;
+                    }
+
+                }
+                cout << "|              Producto Eliminado :(              |" << endl;
+                cout << "+-------------------------------------------------+" << endl;
                 cout << endl;
                 break;
 
@@ -93,9 +101,8 @@ struct CARRITO {
         }
         if (encontrado == false) {
         
-            cout << "==================================" << endl;
-            cout << "  Producto no esta en el carrito  " << endl;
-            cout << "==================================" << endl;
+            cout << "|         Producto no esta en el carrito!         |" << endl;
+            cout << "+-------------------------------------------------+" << endl;
             cout << endl;
         
         }
@@ -105,5 +112,5 @@ struct CARRITO {
 };
 
 void cargarCatalogo(vector<PRODUCTO>& catalogo);
-void buscarProducto(vector<PRODUCTO>& catalogo, bool& condition);
+void buscarProducto(vector<PRODUCTO>& catalogo, int& lineas);
 void mostrarCarrito(double& subtotal, vector<string> productos, vector<PRODUCTO>& catalogo);
